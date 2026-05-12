@@ -9,6 +9,7 @@ import com.paymentchain.customer.entities.CustomerProduct;
 import com.paymentchain.customer.entities.ProductResponse;
 import com.paymentchain.customer.exception.BusinessRuleException;
 import com.paymentchain.customer.repository.CustomerRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,7 @@ public class CustomerRestController {
 
     //public Object get(@PathVariable String id) {
     @GetMapping("/{id}")
+    @CircuitBreaker(name = "EjemploCurso")
     public ResponseEntity<?> get(@PathVariable("id") Long id) throws BusinessRuleException {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
 
